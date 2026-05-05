@@ -1,0 +1,323 @@
+/* ================================================================
+   Night Mode — AKUVISA
+   Diterapkan via class `night-mode` di <body>
+   ================================================================ */
+
+/* ── Variabel warna dark ── */
+body.night-mode {
+  --nm-bg:          #0f1117;
+  --nm-bg2:         #1a1d27;
+  --nm-bg3:         #222538;
+  --nm-card:        #1e2130;
+  --nm-border:      #2e3250;
+  --nm-text:        #e2e8f0;
+  --nm-text-muted:  #8892b0;
+  --nm-primary:     #6777ef;
+  --nm-primary-dim: #3d4a9e;
+  --nm-danger:      #ef4444;
+  --nm-sidebar:     #141726;
+  --nm-navbar:      #181b2d;
+  --nm-input:       #252840;
+  --nm-hover:       #252a40;
+  --nm-shadow:      0 2px 12px rgba(0,0,0,.45);
+}
+
+/* ── Global ── */
+body.night-mode,
+body.night-mode .main-wrapper { background: var(--nm-bg) !important; color: var(--nm-text) !important; }
+
+/* ── Navbar ── */
+body.night-mode .navbar-bg,
+body.night-mode .main-navbar { background: var(--nm-navbar) !important; border-bottom: 1px solid var(--nm-border) !important; }
+body.night-mode .main-navbar .nav-link,
+body.night-mode .main-navbar .nav-link-user { color: var(--nm-text) !important; }
+body.night-mode .main-navbar .dropdown-menu { background: var(--nm-card) !important; border: 1px solid var(--nm-border) !important; }
+body.night-mode .main-navbar .dropdown-item { color: var(--nm-text) !important; }
+body.night-mode .main-navbar .dropdown-item:hover { background: var(--nm-hover) !important; }
+
+/* ── Sidebar ── */
+body.night-mode .main-sidebar,
+body.night-mode #sidebar-wrapper { background: var(--nm-sidebar) !important; border-right: 1px solid var(--nm-border) !important; }
+body.night-mode .sidebar-brand a,
+body.night-mode .sidebar-brand-sm a { color: var(--nm-primary) !important; }
+body.night-mode .sidebar-menu .menu-header { color: var(--nm-text-muted) !important; }
+body.night-mode .sidebar-menu > li > a { color: var(--nm-text) !important; }
+body.night-mode .sidebar-menu > li > a:hover,
+body.night-mode .sidebar-menu > li.active > a { background: var(--nm-hover) !important; color: var(--nm-primary) !important; }
+body.night-mode .sidebar-menu .dropdown-menu { background: var(--nm-bg3) !important; }
+body.night-mode .sidebar-menu .dropdown-menu li a { color: var(--nm-text-muted) !important; }
+body.night-mode .sidebar-menu .dropdown-menu li a:hover { color: var(--nm-primary) !important; background: var(--nm-hover) !important; }
+
+/* ── Cards ── */
+body.night-mode .card { background: var(--nm-card) !important; border: 1px solid var(--nm-border) !important; box-shadow: var(--nm-shadow) !important; }
+body.night-mode .card-header { background: var(--nm-bg3) !important; border-bottom: 1px solid var(--nm-border) !important; color: var(--nm-text) !important; }
+body.night-mode .card-title { color: var(--nm-text) !important; }
+
+/* ── Section header ── */
+body.night-mode .section-header { border-bottom: 1px solid var(--nm-border) !important; }
+body.night-mode .section-header h1,
+body.night-mode .section-title { color: var(--nm-text) !important; }
+
+/* ── Tables ── */
+body.night-mode .table { color: var(--nm-text) !important; }
+body.night-mode .table thead th { color: var(--nm-text-muted) !important; border-bottom: 1px solid var(--nm-border) !important; background: transparent !important; }
+body.night-mode .table tbody tr { background: var(--nm-bg2) !important; }
+body.night-mode .table tbody tr:hover { background: var(--nm-hover) !important; }
+body.night-mode .table tbody tr td { border-color: var(--nm-border) !important; color: var(--nm-text) !important; }
+body.night-mode .table-striped tbody tr:nth-of-type(odd) { background: var(--nm-bg3) !important; }
+
+/* DataTables pagination */
+body.night-mode .dataTables_wrapper .dataTables_paginate .paginate_button { color: var(--nm-text) !important; }
+body.night-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+body.night-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover { background: var(--nm-primary) !important; color: #fff !important; border-color: var(--nm-primary) !important; border-radius: 6px !important; }
+body.night-mode .dataTables_wrapper .dataTables_info { color: var(--nm-text-muted) !important; }
+
+/* ── Forms & Inputs ── */
+body.night-mode input,
+body.night-mode select,
+body.night-mode textarea,
+body.night-mode .form-control { background: var(--nm-input) !important; border: 1px solid var(--nm-border) !important; color: var(--nm-text) !important; }
+body.night-mode input::placeholder,
+body.night-mode .form-control::placeholder { color: var(--nm-text-muted) !important; }
+body.night-mode input:focus,
+body.night-mode select:focus,
+body.night-mode .form-control:focus { border-color: var(--nm-primary) !important; box-shadow: 0 0 0 3px rgba(103,119,239,.2) !important; outline: none !important; }
+body.night-mode .input-group-text { background: var(--nm-bg3) !important; border-color: var(--nm-border) !important; color: var(--nm-text-muted) !important; }
+body.night-mode label { color: var(--nm-text) !important; }
+body.night-mode .custom-select { background-color: var(--nm-input) !important; color: var(--nm-text) !important; border-color: var(--nm-border) !important; }
+
+/* ── Alerts ── */
+body.night-mode .alert-success { background: #0d3321 !important; border-color: #1a5c3a !important; color: #6ee7b7 !important; }
+body.night-mode .alert-danger  { background: #3b0f0f !important; border-color: #7f1d1d !important; color: #fca5a5 !important; }
+body.night-mode .alert-info    { background: #0c2340 !important; border-color: #1e4976 !important; color: #93c5fd !important; }
+body.night-mode .alert-warning { background: #2d1f00 !important; border-color: #78450f !important; color: #fcd34d !important; }
+
+/* ── Footer ── */
+body.night-mode .main-footer { background: var(--nm-navbar) !important; border-top: 1px solid var(--nm-border) !important; color: var(--nm-text-muted) !important; }
+
+/* ── Filter bar ── */
+body.night-mode .filter-bar { background: var(--nm-bg2) !important; border: 1px solid var(--nm-border) !important; }
+body.night-mode .filter-search-icon { color: var(--nm-text-muted) !important; }
+body.night-mode .filter-search-input { background: transparent !important; color: var(--nm-text) !important; }
+body.night-mode .filter-select { background: var(--nm-input) !important; color: var(--nm-text) !important; border-color: var(--nm-border) !important; }
+
+/* ── Aksi buttons ── */
+body.night-mode .btn-aksi,
+body.night-mode .btn-upload { background: var(--nm-bg3) !important; border-color: var(--nm-border) !important; color: var(--nm-text) !important; }
+body.night-mode .btn-aksi:hover,
+body.night-mode .btn-upload:hover { background: var(--nm-hover) !important; }
+body.night-mode .btn-more { background: var(--nm-bg3) !important; border-color: var(--nm-border) !important; color: var(--nm-text-muted) !important; }
+body.night-mode .btn-more:hover { background: var(--nm-hover) !important; color: var(--nm-text) !important; }
+
+/* ── Dropdown aksi ── */
+body.night-mode .aksi-dropdown { background: var(--nm-card) !important; border-color: var(--nm-border) !important; box-shadow: 0 8px 24px rgba(0,0,0,.5) !important; }
+body.night-mode .aksi-dropdown a,
+body.night-mode .aksi-dropdown button { color: var(--nm-text) !important; }
+body.night-mode .aksi-dropdown a:hover,
+body.night-mode .aksi-dropdown button:hover { background: var(--nm-hover) !important; }
+body.night-mode .aksi-dropdown .divider { background: var(--nm-border) !important; }
+body.night-mode .aksi-dropdown .text-danger { color: var(--nm-danger) !important; }
+body.night-mode .aksi-dropdown .text-danger:hover { background: #2d0f0f !important; }
+
+/* ── Bulk toolbar ── */
+body.night-mode .bulk-toolbar { background: #2d0f0f !important; border-color: #7f1d1d !important; }
+body.night-mode .bulk-toolbar .bulk-count { color: #fca5a5 !important; }
+body.night-mode .btn-bulk-cancel { background: var(--nm-bg3) !important; border-color: var(--nm-border) !important; color: var(--nm-text-muted) !important; }
+
+/* ── Avatar cell ── */
+body.night-mode .apl-name, body.night-mode .app-applicant-name,
+body.night-mode .pay-name,  body.night-mode .doc-applicant-name { color: var(--nm-text) !important; }
+body.night-mode .apl-sub,  body.night-mode .app-applicant-sub,
+body.night-mode .pay-sub,  body.night-mode .doc-applicant-email,
+body.night-mode .apl-info span, body.night-mode .app-meta span,
+body.night-mode .apl-date span, body.night-mode .app-date span,
+body.night-mode .pay-date span, body.night-mode .doc-date span { color: var(--nm-text-muted) !important; }
+body.night-mode .apl-info,
+body.night-mode .app-meta { color: var(--nm-text) !important; }
+
+/* ── Dashboard stats cards ── */
+body.night-mode .statistic-details-item .detail-name { color: var(--nm-text-muted) !important; }
+body.night-mode .statistic-details-item .detail-value { color: var(--nm-text) !important; }
+
+/* ── Breadcrumb ── */
+body.night-mode .breadcrumb { background: var(--nm-bg2) !important; }
+body.night-mode .breadcrumb-item a { color: var(--nm-primary) !important; }
+body.night-mode .breadcrumb-item.active { color: var(--nm-text-muted) !important; }
+
+/* ── Modal ── */
+body.night-mode .modal-content { background: var(--nm-card) !important; border: 1px solid var(--nm-border) !important; }
+body.night-mode .modal-header { border-bottom-color: var(--nm-border) !important; }
+body.night-mode .modal-footer { border-top-color: var(--nm-border) !important; }
+body.night-mode .modal-title { color: var(--nm-text) !important; }
+body.night-mode .close { color: var(--nm-text) !important; }
+
+/* ── Toggle button (in navbar) ── */
+#nightModeToggle {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #6b7280;
+  transition: background .15s, color .15s, border-color .15s;
+  margin-right: 4px;
+}
+#nightModeToggle:hover { background: #f3f4f6; color: #111827; border-color: #d1d5db; }
+body.night-mode #nightModeToggle { color: #fbbf24; border-color: var(--nm-border); }
+body.night-mode #nightModeToggle:hover { background: var(--nm-hover); }
+
+/* ── Scrollbar ── */
+body.night-mode ::-webkit-scrollbar { width: 7px; height: 7px; }
+body.night-mode ::-webkit-scrollbar-track { background: var(--nm-bg2); }
+body.night-mode ::-webkit-scrollbar-thumb { background: var(--nm-border); border-radius: 4px; }
+body.night-mode ::-webkit-scrollbar-thumb:hover { background: var(--nm-primary-dim); }
+
+/* ── Transisi smooth ──
+   Hanya aktif setelah class `transitions-enabled` ditambahkan via JS
+   (setelah DOMContentLoaded) agar tidak ada flash animasi saat navigasi halaman.
+   ── */
+body.transitions-enabled,
+body.transitions-enabled .card,
+body.transitions-enabled .main-sidebar,
+body.transitions-enabled .main-navbar,
+body.transitions-enabled .navbar-bg,
+body.transitions-enabled .main-footer,
+body.transitions-enabled .table tbody tr,
+body.transitions-enabled input,
+body.transitions-enabled select,
+body.transitions-enabled .form-control,
+body.transitions-enabled .aksi-dropdown,
+body.transitions-enabled .filter-bar {
+  transition: background-color .25s ease, color .2s ease, border-color .2s ease !important;
+}
+
+/* ================================================================
+   Night Mode — Dashboard (dashboard.css overrides)
+   Semua class custom di dashboard.css di-override di sini
+   ================================================================ */
+
+/* ── Section header ── */
+body.night-mode .section-header h1 { color: var(--nm-text) !important; }
+body.night-mode .dash-date { color: var(--nm-text-muted) !important; }
+
+/* ── Stat cards ── */
+body.night-mode .dash-stat-card {
+  background: var(--nm-card) !important;
+  border-color: var(--nm-border) !important;
+  box-shadow: var(--nm-shadow) !important;
+}
+body.night-mode .dash-stat-number { color: var(--nm-text) !important; }
+body.night-mode .dash-stat-label  { color: var(--nm-text-muted) !important; }
+
+/* Icon backgrounds — softer tones untuk dark mode */
+body.night-mode .dash-icon-blue   { background: #1e2a55 !important; color: #818cf8 !important; }
+body.night-mode .dash-icon-orange { background: #2d1f0a !important; color: #fbbf24 !important; }
+body.night-mode .dash-icon-green  { background: #0d2e1f !important; color: #34d399 !important; }
+body.night-mode .dash-icon-purple { background: #251a3d !important; color: #a78bfa !important; }
+body.night-mode .dash-icon-yellow { background: #2d2200 !important; color: #fcd34d !important; }
+
+/* ── Main cards (Recent Applications & Top Destinations) ── */
+body.night-mode .dash-card {
+  background: var(--nm-card) !important;
+  border-color: var(--nm-border) !important;
+  box-shadow: var(--nm-shadow) !important;
+}
+body.night-mode .dash-card-header {
+  border-bottom-color: var(--nm-border) !important;
+}
+body.night-mode .dash-card-title { color: var(--nm-text) !important; }
+body.night-mode .dash-card-body  { background: var(--nm-card) !important; }
+
+/* View All button */
+body.night-mode .dash-view-all {
+  color: var(--nm-primary) !important;
+  border-color: var(--nm-primary) !important;
+}
+body.night-mode .dash-view-all:hover {
+  background: var(--nm-primary) !important;
+  color: #fff !important;
+}
+
+/* ── Recent Applications table ── */
+body.night-mode .dash-table thead th {
+  background: var(--nm-bg3) !important;
+  color: var(--nm-text-muted) !important;
+  border-bottom-color: var(--nm-border) !important;
+}
+body.night-mode .dash-table tbody tr {
+  border-bottom-color: var(--nm-border) !important;
+}
+body.night-mode .dash-table tbody tr:hover { background: var(--nm-hover) !important; }
+body.night-mode .dash-table tbody td { color: var(--nm-text) !important; }
+
+/* Applicant cell */
+body.night-mode .dash-name    { color: var(--nm-text) !important; }
+body.night-mode .dash-phone   { color: var(--nm-text-muted) !important; }
+body.night-mode .dash-country { color: var(--nm-text-muted) !important; }
+
+/* Status badges — tetap warna tapi background lebih gelap */
+body.night-mode .badge-green  { background: #0d2e1f !important; color: #34d399 !important; }
+body.night-mode .badge-orange { background: #2d1f0a !important; color: #fbbf24 !important; }
+body.night-mode .badge-red    { background: #2d0f0f !important; color: #f87171 !important; }
+
+/* ── Top Destinations ── */
+body.night-mode .dash-dest-row { border-bottom-color: var(--nm-border) !important; }
+body.night-mode .dash-dest-avatar {
+  background: #1e2a55 !important;
+  color: #818cf8 !important;
+}
+body.night-mode .dash-dest-name  { color: var(--nm-text) !important; }
+body.night-mode .dash-dest-count { color: var(--nm-text-muted) !important; }
+body.night-mode .dash-dest-bar-wrap { background: var(--nm-bg3) !important; }
+
+/* ── Transitions untuk elemen dashboard ── */
+body.transitions-enabled .dash-stat-card,
+body.transitions-enabled .dash-card,
+body.transitions-enabled .dash-table tbody tr,
+body.transitions-enabled .dash-dest-row {
+  transition: background-color .25s ease, border-color .2s ease !important;
+}
+
+/* ================================================================
+   Night Mode — Section Header Fix
+   Override background #fff dari .section .section-header di style.css
+   ================================================================ */
+
+body.night-mode .section .section-header,
+body.night-mode .main-wrapper-1 .section .section-header {
+  background-color: var(--nm-bg) !important;
+  background: var(--nm-bg) !important;
+  border-top-color: var(--nm-border) !important;
+  box-shadow: none !important;
+}
+
+body.night-mode .section .section-header h1,
+body.night-mode .section .section-header .section-title {
+  color: var(--nm-text) !important;
+}
+
+/* Pastikan main-content area juga gelap */
+body.night-mode .main-content {
+  background-color: var(--nm-bg) !important;
+}
+
+/* ================================================================
+   Night Mode — Section Header fix
+   style.css mendefinisikan .section .section-header { background: #fff }
+   Override harus lebih spesifik agar menang
+   ================================================================ */
+body.night-mode .section .section-header {
+  background-color: var(--nm-bg) !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid var(--nm-border) !important;
+}
+body.night-mode .section .section-header h1 { color: var(--nm-text) !important; }
+
+/* Main content area background */
+body.night-mode .main-content { background: var(--nm-bg) !important; }
+body.night-mode .section       { background: var(--nm-bg) !important; }

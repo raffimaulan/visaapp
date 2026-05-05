@@ -1,0 +1,322 @@
+/* ================================================================
+   Dashboard — Custom Styles
+   ================================================================ */
+
+/* Header */
+.section-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 2px;
+}
+
+.dash-date {
+  font-size: 13px;
+  color: #9a9ab0;
+  margin-bottom: 4px;
+}
+
+/* ----------------------------------------------------------------
+   STAT CARDS
+   ---------------------------------------------------------------- */
+.stat-row {
+  margin-bottom: 8px;
+}
+
+/* 5-column equal grid */
+.col-stat {
+  flex: 0 0 20%;
+  max-width: 20%;
+  padding-right: 12px;
+  padding-left: 12px;
+}
+
+@media (max-width: 1199px) {
+  .col-stat {
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+  }
+}
+
+@media (max-width: 767px) {
+  .col-stat {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+.dash-stat-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px 24px 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1px solid #f0f0f5;
+  position: relative;
+  overflow: hidden;
+}
+
+.dash-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.dash-icon-blue   { background: #eef2ff; color: #6777ef; }
+.dash-icon-orange { background: #fff4e6; color: #f59e0b; }
+.dash-icon-green  { background: #e6faf2; color: #10b981; }
+.dash-icon-purple { background: #f3eeff; color: #8b5cf6; }
+.dash-icon-yellow { background: #fffbeb; color: #d97706; }
+
+.dash-stat-number {
+  font-size: 36px;
+  font-weight: 800;
+  color: #1a1a2e;
+  line-height: 1;
+  margin-bottom: 6px;
+  letter-spacing: -1px;
+}
+
+.dash-stat-label {
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.dash-stat-growth {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.growth-up   { color: #10b981; }
+.growth-down { color: #ef4444; }
+
+/* ----------------------------------------------------------------
+   MAIN CARD (Recent + Destinations)
+   ---------------------------------------------------------------- */
+.dash-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1px solid #f0f0f5;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.dash-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #f5f5f8;
+}
+
+.dash-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.dash-view-all {
+  font-size: 13px;
+  color: #6777ef;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border: 1.5px solid #6777ef;
+  border-radius: 8px;
+  transition: all .2s;
+}
+
+.dash-view-all:hover {
+  background: #6777ef;
+  color: #fff;
+  text-decoration: none;
+}
+
+.dash-card-body {
+  padding: 16px 24px 20px;
+}
+
+/* ----------------------------------------------------------------
+   RECENT TABLE
+   ---------------------------------------------------------------- */
+.dash-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dash-table thead th {
+  font-size: 11px;
+  font-weight: 700;
+  color: #9a9ab0;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border-bottom: 1px solid #f0f0f5;
+  background: #fafafa;
+}
+
+.dash-table tbody tr {
+  border-bottom: 1px solid #f5f5f8;
+  transition: background .15s;
+}
+
+.dash-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.dash-table tbody tr:hover {
+  background: #fafbff;
+}
+
+.dash-table tbody td {
+  padding: 13px 16px;
+  vertical-align: middle;
+}
+
+/* Applicant cell */
+.dash-applicant {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dash-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.dash-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  white-space: nowrap;
+}
+
+.dash-phone {
+  font-size: 12px;
+  color: #9a9ab0;
+  margin-top: 1px;
+}
+
+.dash-country {
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Status Badges */
+.dash-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.badge-green  { background: #e6faf2; color: #10b981; }
+.badge-orange { background: #fff4e6; color: #f59e0b; }
+.badge-red    { background: #fef2f2; color: #ef4444; }
+
+/* ----------------------------------------------------------------
+   TOP DESTINATIONS
+   ---------------------------------------------------------------- */
+.dash-dest-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f5f5f8;
+}
+
+.dash-dest-row:last-child {
+  border-bottom: none;
+}
+
+.dash-dest-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #eef2ff;
+  color: #6777ef;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.dash-dest-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.dash-dest-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 6px;
+}
+
+.dash-dest-bar-wrap {
+  height: 5px;
+  background: #f0f0f5;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.dash-dest-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #6777ef, #8b9ef5);
+  border-radius: 10px;
+  transition: width .6s ease;
+  min-width: 8px;
+}
+
+.dash-dest-count {
+  font-size: 14px;
+  font-weight: 700;
+  color: #374151;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ----------------------------------------------------------------
+   Responsive
+   ---------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .dash-stat-card {
+    padding: 18px;
+  }
+  .dash-stat-number {
+    font-size: 28px;
+  }
+  .dash-table thead th,
+  .dash-table tbody td {
+    padding: 10px 12px;
+  }
+  .dash-phone {
+    display: none;
+  }
+}

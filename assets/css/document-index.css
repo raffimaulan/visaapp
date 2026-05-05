@@ -1,0 +1,283 @@
+/* ================================================================
+   Documents Index — Clean Card Table Style
+   ================================================================ */
+
+#table-documents {
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+#table-documents thead th {
+  border-bottom: 1px solid #e5e7eb;
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  padding: 8px 14px;
+  background: transparent;
+  border-top: none;
+}
+
+#table-documents tbody tr {
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  border-radius: 10px;
+}
+
+#table-documents tbody tr td {
+  padding: 14px;
+  vertical-align: middle;
+  border-top: none;
+  border-bottom: none;
+}
+
+#table-documents tbody tr td:first-child {
+  border-radius: 10px 0 0 10px;
+  color: #9ca3af;
+  font-size: 13px;
+  width: 40px;
+}
+
+#table-documents tbody tr td:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+/* ── Applicant cell ── */
+.doc-applicant {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.doc-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.doc-applicant-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.3;
+}
+
+.doc-applicant-email {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* ── Pengajuan cell ── */
+.doc-pengajuan-country {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.badge-visa {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-top: 4px;
+}
+
+.badge-visa.tourist  { background: #ede9fe; color: #7c3aed; }
+.badge-visa.student  { background: #e0f2fe; color: #0369a1; }
+.badge-visa.business { background: #fef3c7; color: #b45309; }
+.badge-visa.work     { background: #dcfce7; color: #15803d; }
+.badge-visa.transit  { background: #fce7f3; color: #be185d; }
+.badge-visa.default  { background: #f3f4f6; color: #6b7280; }
+
+/* ── File chips ── */
+.doc-files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.file-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity .15s;
+  white-space: nowrap;
+}
+
+.file-chip:hover { opacity: .8; text-decoration: none; }
+
+.file-chip.pdf { background: #fef2f2; color: #dc2626; }
+.file-chip.img { background: #eff6ff; color: #2563eb; }
+.file-chip.other { background: #f3f4f6; color: #6b7280; }
+
+.file-chip i { font-size: 13px; }
+
+.file-chip-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background .15s;
+}
+
+.file-chip-more:hover { background: #e5e7eb; }
+
+/* ── Tanggal cell ── */
+.doc-date {
+  font-size: 13px;
+  color: #374151;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.doc-date span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+/* ── Status badge ── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-badge::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-badge.lengkap  { background: #dcfce7; color: #15803d; }
+.status-badge.lengkap::before  { background: #16a34a; }
+.status-badge.pending  { background: #fef9c3; color: #b45309; }
+.status-badge.pending::before  { background: #d97706; }
+.status-badge.kurang   { background: #fef2f2; color: #dc2626; }
+.status-badge.kurang::before   { background: #ef4444; }
+
+/* ── Aksi cell ── */
+.aksi-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.btn-upload {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background .15s, border-color .15s;
+}
+
+.btn-upload:hover { background: #f9fafb; border-color: #9ca3af; color: #111827; text-decoration: none; }
+.btn-upload i { color: #6777ef; }
+
+.btn-more {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #6b7280;
+  transition: background .15s;
+  flex-shrink: 0;
+}
+
+.btn-more:hover { background: #f3f4f6; color: #111827; }
+
+/* ── Dropdown menu ── */
+.aksi-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.1);
+  min-width: 160px;
+  z-index: 999;
+  display: none;
+  overflow: hidden;
+}
+
+.aksi-dropdown.show { display: block; }
+
+.aksi-dropdown a,
+.aksi-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  font-size: 13px;
+  color: #374151;
+  text-decoration: none;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background .12s;
+}
+
+.aksi-dropdown a:hover,
+.aksi-dropdown button:hover { background: #f9fafb; color: #111827; }
+
+.aksi-dropdown .divider {
+  height: 1px;
+  background: #f3f4f6;
+  margin: 3px 0;
+}
+
+.aksi-dropdown .text-danger { color: #ef4444 !important; }
+.aksi-dropdown .text-danger:hover { background: #fef2f2 !important; }
