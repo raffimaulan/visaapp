@@ -1,8 +1,8 @@
-Berikut README untuk project AKUVISA:
+Berikut README untuk project:
 
 ---
 
-# 🛂 AKUVISA — Sistem Manajemen Pengajuan Visa
+# 🛂 Sistem Manajemen Pengajuan Visa
 
 Aplikasi berbasis web untuk mengelola pengajuan visa secara efisien, mulai dari data pemohon, proses pengajuan, pembayaran, hingga laporan.
 
@@ -60,6 +60,3 @@ visaapp/
 
 Project ini dibuat untuk keperluan manajemen internal pengajuan visa.
 
----
-
-Tinggal sesuaikan username GitHub dan kredensial default jika berbeda. Mau ada yang ditambah atau diubah?
