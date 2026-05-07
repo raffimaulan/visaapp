@@ -38,52 +38,55 @@ class Payment {
     }
 
     // Tambah payment baru
-    public function create($application_id, $payment_type, $amount_total, $dp_amount, $amount_paid, $status = 'unpaid', $proof = null, $paid_at = null) {
-        $application_id = (int) $application_id;
-        $payment_type   = mysqli_real_escape_string($this->conn, $payment_type);
-        $amount_total   = (float) $amount_total;
-        $dp_amount      = (float) $dp_amount;
-        $amount_paid    = (float) $amount_paid;
-        $status         = mysqli_real_escape_string($this->conn, $status);
-        $proof          = $proof   ? "'" . mysqli_real_escape_string($this->conn, $proof) . "'"   : "NULL";
-        $paid_at        = $paid_at ? "'" . mysqli_real_escape_string($this->conn, $paid_at) . "'" : "NULL";
+    public function create($application_id, $payment_type, $amount_total, $dp_amount, $amount_paid, $status = 'unpaid', $proof = null, $paid_at = null, $proof_pelunasan = null) {
+        $application_id  = (int) $application_id;
+        $payment_type    = mysqli_real_escape_string($this->conn, $payment_type);
+        $amount_total    = (float) $amount_total;
+        $dp_amount       = (float) $dp_amount;
+        $amount_paid     = (float) $amount_paid;
+        $status          = mysqli_real_escape_string($this->conn, $status);
+        $proof           = $proof           ? "'" . mysqli_real_escape_string($this->conn, $proof)           . "'" : "NULL";
+        $proof_pelunasan = $proof_pelunasan ? "'" . mysqli_real_escape_string($this->conn, $proof_pelunasan) . "'" : "NULL";
+        $paid_at         = $paid_at         ? "'" . mysqli_real_escape_string($this->conn, $paid_at)         . "'" : "NULL";
 
         $query = "INSERT INTO {$this->table}
-                    (application_id, payment_type, amount_total, dp_amount, amount_paid, status, proof, paid_at)
+                    (application_id, payment_type, amount_total, dp_amount, amount_paid, status, proof, proof_pelunasan, paid_at)
                   VALUES
-                    ($application_id, '$payment_type', $amount_total, $dp_amount, $amount_paid, '$status', $proof, $paid_at)";
+                    ($application_id, '$payment_type', $amount_total, $dp_amount, $amount_paid, '$status', $proof, $proof_pelunasan, $paid_at)";
         mysqli_query($this->conn, $query);
         return mysqli_insert_id($this->conn);
     }
 
     // Update payment
-    public function update($id, $payment_type, $amount_total, $dp_amount, $amount_paid, $status, $proof = null, $paid_at = null) {
-        $id           = (int) $id;
-        $payment_type = mysqli_real_escape_string($this->conn, $payment_type);
-        $amount_total = (float) $amount_total;
-        $dp_amount    = (float) $dp_amount;
-        $amount_paid  = (float) $amount_paid;
-        $status       = mysqli_real_escape_string($this->conn, $status);
-        $proof        = $proof   ? "'" . mysqli_real_escape_string($this->conn, $proof) . "'"   : "NULL";
-        $paid_at      = $paid_at ? "'" . mysqli_real_escape_string($this->conn, $paid_at) . "'" : "NULL";
+    public function update($id, $payment_type, $amount_total, $dp_amount, $amount_paid, $status, $proof = null, $paid_at = null, $proof_pelunasan = null) {
+        $id              = (int) $id;
+        $payment_type    = mysqli_real_escape_string($this->conn, $payment_type);
+        $amount_total    = (float) $amount_total;
+        $dp_amount       = (float) $dp_amount;
+        $amount_paid     = (float) $amount_paid;
+        $status          = mysqli_real_escape_string($this->conn, $status);
+        $proof           = $proof           ? "'" . mysqli_real_escape_string($this->conn, $proof)           . "'" : "NULL";
+        $proof_pelunasan = $proof_pelunasan ? "'" . mysqli_real_escape_string($this->conn, $proof_pelunasan) . "'" : "NULL";
+        $paid_at         = $paid_at         ? "'" . mysqli_real_escape_string($this->conn, $paid_at)         . "'" : "NULL";
 
         $query = "UPDATE {$this->table}
                   SET payment_type='$payment_type', amount_total=$amount_total,
                       dp_amount=$dp_amount, amount_paid=$amount_paid,
-                      status='$status', proof=$proof, paid_at=$paid_at
+                      status='$status', proof=$proof, proof_pelunasan=$proof_pelunasan, paid_at=$paid_at
                   WHERE id=$id";
         return mysqli_query($this->conn, $query);
     }
 
     // Update status pembayaran
-    public function updateStatus($id, $status, $proof = null, $paid_at = null) {
-        $id      = (int) $id;
-        $status  = mysqli_real_escape_string($this->conn, $status);
-        $proof   = $proof   ? "'" . mysqli_real_escape_string($this->conn, $proof) . "'"   : "NULL";
-        $paid_at = $paid_at ? "'" . mysqli_real_escape_string($this->conn, $paid_at) . "'" : "NULL";
+    public function updateStatus($id, $status, $proof = null, $paid_at = null, $proof_pelunasan = null) {
+        $id              = (int) $id;
+        $status          = mysqli_real_escape_string($this->conn, $status);
+        $proof           = $proof           ? "'" . mysqli_real_escape_string($this->conn, $proof)           . "'" : "NULL";
+        $proof_pelunasan = $proof_pelunasan ? "'" . mysqli_real_escape_string($this->conn, $proof_pelunasan) . "'" : "NULL";
+        $paid_at         = $paid_at         ? "'" . mysqli_real_escape_string($this->conn, $paid_at)         . "'" : "NULL";
 
         $query = "UPDATE {$this->table}
-                  SET status='$status', proof=$proof, paid_at=$paid_at
+                  SET status='$status', proof=$proof, proof_pelunasan=$proof_pelunasan, paid_at=$paid_at
                   WHERE id=$id";
         return mysqli_query($this->conn, $query);
     }

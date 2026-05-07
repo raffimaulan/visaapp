@@ -89,6 +89,44 @@ if (!empty($_FILES['proof']['name']) && $_FILES['proof']['error'] === UPLOAD_ERR
     $proof = $filename;
 }
 
+// ----------------------------------------------------------------
+// Handle upload bukti pelunasan
+// ----------------------------------------------------------------
+$proof_pelunasan = null;
+if (!empty($_FILES['proof_pelunasan']['name']) && $_FILES['proof_pelunasan']['error'] === UPLOAD_ERR_OK) {
+    $allowed   = ['image/jpeg', 'image/png', 'application/pdf'];
+    $ext_map   = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'application/pdf' => 'pdf'];
+    $max_size  = 2 * 1024 * 1024;
+    $file      = $_FILES['proof_pelunasan'];
+
+    if ($file['size'] > $max_size) {
+        $_SESSION['error'] = 'File bukti pelunasan melebihi 2MB.';
+        header('Location: create.php');
+        exit;
+    }
+
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mime  = finfo_file($finfo, $file['tmp_name']);
+    finfo_close($finfo);
+
+    if (!in_array($mime, $allowed)) {
+        $_SESSION['error'] = 'Format bukti pelunasan tidak didukung (JPG, PNG, PDF).';
+        header('Location: create.php');
+        exit;
+    }
+
+    $upload_dir = __DIR__ . '/../uploads/proofs/';
+    if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
+
+    $filename = 'pelunasan_' . $application_id . '_' . time() . '_' . uniqid() . '.' . $ext_map[$mime];
+    if (!move_uploaded_file($file['tmp_name'], $upload_dir . $filename)) {
+        $_SESSION['error'] = 'Gagal menyimpan file bukti pelunasan.';
+        header('Location: create.php');
+        exit;
+    }
+    $proof_pelunasan = $filename;
+}
+
 $paymentModel = new Payment($connection);
 
 // ----------------------------------------------------------------
@@ -98,7 +136,7 @@ if ($payment_id > 0) {
 
     // Verifikasi payment_id benar dan milik application ini
     $existing = mysqli_fetch_assoc(mysqli_query($connection,
-        "SELECT id, proof, amount_paid AS old_paid FROM payments WHERE id = $payment_id AND application_id = $application_id LIMIT 1"
+        "SELECT id, proof, proof_pelunasan, amount_paid AS old_paid FROM payments WHERE id = $payment_id AND application_id = $application_id LIMIT 1"
     ));
 
     if (!$existing) {
@@ -109,6 +147,7 @@ if ($payment_id > 0) {
 
     // Pakai bukti lama jika tidak upload baru
     if (!$proof) $proof = $existing['proof'];
+    if (!$proof_pelunasan) $proof_pelunasan = $existing['proof_pelunasan'];
 
     // Akumulasi: total yang sudah dibayar = lama + input baru
     $amount_paid_total = (float)$existing['old_paid'] + $amount_paid;
@@ -126,18 +165,20 @@ if ($payment_id > 0) {
 
     $pt  = mysqli_real_escape_string($connection, $payment_type);
     $st  = mysqli_real_escape_string($connection, $status);
-    $pr  = $proof   ? "'" . mysqli_real_escape_string($connection, $proof)   . "'" : "NULL";
-    $pa  = $paid_at ? "'" . mysqli_real_escape_string($connection, $paid_at) . "'" : "NULL";
+    $pr  = $proof            ? "'" . mysqli_real_escape_string($connection, $proof)            . "'" : "NULL";
+    $pr2 = $proof_pelunasan  ? "'" . mysqli_real_escape_string($connection, $proof_pelunasan)  . "'" : "NULL";
+    $pa  = $paid_at          ? "'" . mysqli_real_escape_string($connection, $paid_at)          . "'" : "NULL";
 
     $ok = mysqli_query($connection,
         "UPDATE payments
-         SET payment_type  = '$pt',
-             amount_total  = $amount_total,
-             dp_amount     = $dp_amount,
-             amount_paid   = $amount_paid_total,
-             status        = '$st',
-             proof         = $pr,
-             paid_at       = $pa
+         SET payment_type    = '$pt',
+             amount_total    = $amount_total,
+             dp_amount       = $dp_amount,
+             amount_paid     = $amount_paid_total,
+             status          = '$st',
+             proof           = $pr,
+             proof_pelunasan = $pr2,
+             paid_at         = $pa
          WHERE id = $payment_id"
     );
 
@@ -161,15 +202,17 @@ if ($payment_id > 0) {
         // Seharusnya tidak terjadi (JS sudah handle), tapi fallback: update
         $pt  = mysqli_real_escape_string($connection, $payment_type);
         $st  = mysqli_real_escape_string($connection, $status);
-        $pr  = $proof   ? "'" . mysqli_real_escape_string($connection, $proof)   . "'" : "NULL";
-        $pa  = $paid_at ? "'" . mysqli_real_escape_string($connection, $paid_at) . "'" : "NULL";
+        $pr  = $proof            ? "'" . mysqli_real_escape_string($connection, $proof)            . "'" : "NULL";
+        $pr2 = $proof_pelunasan  ? "'" . mysqli_real_escape_string($connection, $proof_pelunasan)  . "'" : "NULL";
+        $pa  = $paid_at          ? "'" . mysqli_real_escape_string($connection, $paid_at)          . "'" : "NULL";
         $eid = (int)$existing['id'];
 
         $ok = mysqli_query($connection,
             "UPDATE payments
              SET payment_type = '$pt', amount_total = $amount_total,
                  dp_amount    = $dp_amount, amount_paid  = $amount_paid,
-                 status       = '$st', proof        = $pr, paid_at      = $pa
+                 status       = '$st', proof        = $pr,
+                 proof_pelunasan = $pr2, paid_at    = $pa
              WHERE id = $eid"
         );
         $_SESSION[$ok ? 'success' : 'error'] = $ok
@@ -178,7 +221,7 @@ if ($payment_id > 0) {
     } else {
         $id = $paymentModel->create(
             $application_id, $payment_type, $amount_total,
-            $dp_amount, $amount_paid, $status, $proof, $paid_at
+            $dp_amount, $amount_paid, $status, $proof, $paid_at, $proof_pelunasan
         );
         $_SESSION[$id ? 'success' : 'error'] = $id
             ? 'Pembayaran berhasil ditambahkan.'

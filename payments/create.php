@@ -129,10 +129,18 @@ while ($row = mysqli_fetch_assoc($result)) {
 
           <!-- BUKTI -->
           <div class="form-group">
-            <label>Bukti Pembayaran
+            <label>Bukti Pembayaran DP
               <small class="text-muted">(opsional, jpg/png/pdf maks 2MB)</small>
             </label>
             <input type="file" name="proof" class="form-control-file"
+                   accept=".jpg,.jpeg,.png,.pdf">
+          </div>
+
+          <div class="form-group">
+            <label>Bukti Pelunasan
+              <small class="text-muted">(opsional, diisi saat melunasi — jpg/png/pdf maks 2MB)</small>
+            </label>
+            <input type="file" name="proof_pelunasan" class="form-control-file"
                    accept=".jpg,.jpeg,.png,.pdf">
           </div>
 

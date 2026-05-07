@@ -266,3 +266,30 @@
 .aksi-dropdown .divider { height: 1px; background: #f3f4f6; margin: 3px 0; }
 .aksi-dropdown .text-danger { color: #ef4444 !important; }
 .aksi-dropdown .text-danger:hover { background: #fef2f2 !important; }
+/* ── Bukti Pembayaran cell ── */
+.file-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity .15s;
+  white-space: nowrap;
+}
+.file-chip:hover { opacity: .8; text-decoration: none; }
+.file-chip.pdf   { background: #fef2f2; color: #dc2626; }
+.file-chip.img   { background: #eff6ff; color: #2563eb; }
+.file-chip.other { background: #f3f4f6; color: #6b7280; }
+.file-chip i     { font-size: 13px; }
+
+.proof-empty {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #d1d5db;
+}
+.proof-empty i { font-size: 13px; }

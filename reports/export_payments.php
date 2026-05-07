@@ -18,7 +18,7 @@ if ($status) $where .= " AND p.status = '$status'";
 
 $query = "SELECT p.id, ap.name AS applicant_name, ap.phone, ap.passport_number, a.country, a.visa_type,
                  p.payment_type, p.amount_total, p.dp_amount, p.amount_paid,
-                 p.status, p.paid_at, p.created_at
+                 p.status, p.proof, p.proof_pelunasan, p.paid_at, p.created_at
           FROM payments p
           LEFT JOIN applications a  ON p.application_id = a.id
           LEFT JOIN applicants ap   ON a.applicant_id = ap.id
@@ -73,6 +73,8 @@ if ($format === 'excel') {
         <td>Sudah Dibayar</td>
         <td>Status</td>
         <td>Tgl Bayar</td>
+        <td>Bukti DP</td>
+        <td>Bukti Pelunasan</td>
       </tr>
       <?php $no = 1; foreach ($rows as $row): ?>
       <tr>
@@ -87,15 +89,26 @@ if ($format === 'excel') {
         <td style="text-align:right;">Rp <?= number_format($row['amount_paid'], 0, ',', '.') ?></td>
         <td><?= $status_label[$row['status']] ?? $row['status'] ?></td>
         <td><?= $row['paid_at'] ? date('d/m/Y', strtotime($row['paid_at'])) : '-' ?></td>
+        <?php
+          $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http')
+                    . '://' . $_SERVER['HTTP_HOST']
+                    . rtrim(dirname(dirname($_SERVER['PHP_SELF'])), '/');
+        ?>
+        <td><?= !empty($row['proof'])
+              ? $base_url . '/uploads/proofs/' . htmlspecialchars($row['proof'])
+              : '-' ?></td>
+        <td><?= !empty($row['proof_pelunasan'])
+              ? $base_url . '/uploads/proofs/' . htmlspecialchars($row['proof_pelunasan'])
+              : '-' ?></td>
       </tr>
       <?php endforeach; ?>
-      <tr><td colspan="11"></td></tr>
+      <tr><td colspan="13"></td></tr>
       <tr style="font-weight:bold;background:#EBF3FB;">
         <td colspan="6" style="text-align:right;">TOTAL</td>
         <td style="text-align:right;">Rp <?= number_format($total_tagihan, 0, ',', '.') ?></td>
         <td style="text-align:right;">Rp <?= number_format($total_dp, 0, ',', '.') ?></td>
         <td style="text-align:right;">Rp <?= number_format($total_diterima, 0, ',', '.') ?></td>
-        <td colspan="2">Sisa: Rp <?= number_format($total_sisa, 0, ',', '.') ?></td>
+        <td colspan="4">Sisa: Rp <?= number_format($total_sisa, 0, ',', '.') ?></td>
       </tr>
     </table>
     </body>
@@ -193,6 +206,8 @@ if ($format === 'pdf') {
             <th class="text-right">Sisa</th>
             <th>Status</th>
             <th>Tgl Bayar</th>
+            <th>Bukti DP</th>
+            <th>Bukti Lunas</th>
           </tr>
         </thead>
         <tbody>
@@ -218,6 +233,19 @@ if ($format === 'pdf') {
               <?php endif; ?>
             </td>
             <td><?= $row['paid_at'] ? date('d/m/Y', strtotime($row['paid_at'])) : '-' ?></td>
+            <?php
+              $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http')
+                        . '://' . $_SERVER['HTTP_HOST']
+                        . rtrim(dirname(dirname($_SERVER['PHP_SELF'])), '/');
+            ?>
+            <td><?php if (!empty($row['proof'])):
+              $url = $base_url . '/uploads/proofs/' . htmlspecialchars($row['proof']);
+              echo '<a href="' . $url . '" target="_blank" style="color:#1F4E79;font-size:9px;">Lihat Bukti DP</a>';
+            else: echo '<span style="color:#aaa;">-</span>'; endif; ?></td>
+            <td><?php if (!empty($row['proof_pelunasan'])):
+              $url = $base_url . '/uploads/proofs/' . htmlspecialchars($row['proof_pelunasan']);
+              echo '<a href="' . $url . '" target="_blank" style="color:#1F4E79;font-size:9px;">Lihat Bukti Lunas</a>';
+            else: echo '<span style="color:#aaa;">-</span>'; endif; ?></td>
           </tr>
           <?php endforeach; ?>
         </tbody>
@@ -227,7 +255,7 @@ if ($format === 'pdf') {
             <td class="text-right">Rp <?= number_format($total_tagihan, 0, ',', '.') ?></td>
             <td class="text-right">Rp <?= number_format($total_diterima, 0, ',', '.') ?></td>
             <td class="text-right">Rp <?= number_format($total_sisa, 0, ',', '.') ?></td>
-            <td colspan="2"></td>
+            <td colspan="4"></td>
           </tr>
         </tfoot>
       </table>

@@ -94,6 +94,7 @@ function payTypeLabel($type) {
                 <th>Jenis Bayar</th>
                 <th>Biaya &amp; Progress</th>
                 <th>Tgl Bayar</th>
+                <th>Bukti Bayar</th>
                 <th>Status</th>
                 <th>Aksi</th>
               </tr>
@@ -160,6 +161,33 @@ function payTypeLabel($type) {
                     <span style="color:#9ca3af;font-size:13px">—</span>
                   <?php endif; ?>
                 </td>
+                <td>
+                  <?php
+                    $proofs = [
+                      'DP'        => $row['proof']           ?? '',
+                      'Pelunasan' => $row['proof_pelunasan'] ?? '',
+                    ];
+                    $hasAny = false;
+                    foreach ($proofs as $label => $filename):
+                      if (empty($filename)) continue;
+                      $hasAny    = true;
+                      $proofPath = '../uploads/proofs/' . htmlspecialchars($filename);
+                      $ext       = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                      $chipClass = ($ext === 'pdf') ? 'pdf' : (in_array($ext, ['jpg','jpeg','png']) ? 'img' : 'other');
+                      $chipIcon  = ($ext === 'pdf') ? 'fas fa-file-pdf' : (in_array($ext, ['jpg','jpeg','png']) ? 'fas fa-file-image' : 'fas fa-file');
+                  ?>
+                    <a href="<?= $proofPath ?>" target="_blank"
+                       class="file-chip <?= $chipClass ?>"
+                       title="Bukti <?= $label ?>: <?= htmlspecialchars($filename) ?>"
+                       style="display:flex;margin-bottom:4px;">
+                      <i class="<?= $chipIcon ?>"></i>
+                      <?= $label ?>
+                    </a>
+                  <?php endforeach; ?>
+                  <?php if (!$hasAny): ?>
+                    <span class="proof-empty"><i class="fas fa-times-circle"></i> Belum Ada</span>
+                  <?php endif; ?>
+                </td>
                 <td data-status="<?= htmlspecialchars($row['status'] ?? 'unpaid') ?>">
                   <span class="status-badge <?= htmlspecialchars($row['status'] ?? 'unpaid') ?>">
                     <?= $statusLbl ?>
@@ -201,4 +229,4 @@ function payTypeLabel($type) {
   </div>
 </section>
 
-<?php require_once __DIR__ . '/../layout/_bottom.php'; ?>
+<?php require_once __DIR__ . '/../layout/_bottom.php'; ?> 

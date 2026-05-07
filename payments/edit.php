@@ -50,6 +50,7 @@ $applications = mysqli_query($connection,
         <form method="POST" action="update.php" enctype="multipart/form-data">
           <input type="hidden" name="id" value="<?= $payment['id'] ?>">
           <input type="hidden" name="existing_proof" value="<?= htmlspecialchars($payment['proof'] ?? '') ?>">
+          <input type="hidden" name="existing_proof_pelunasan" value="<?= htmlspecialchars($payment['proof_pelunasan'] ?? '') ?>">
 
           <div class="form-group">
             <label>Pengajuan Visa</label>
@@ -114,7 +115,7 @@ $applications = mysqli_query($connection,
           </div>
 
           <div class="form-group">
-            <label>Bukti Pembayaran</label>
+            <label>Bukti Pembayaran DP</label>
             <?php if (!empty($payment['proof'])): ?>
               <p class="mb-1">
                 <small>File saat ini:
@@ -125,7 +126,22 @@ $applications = mysqli_query($connection,
               </p>
             <?php endif; ?>
             <input type="file" name="proof" class="form-control-file" accept=".jpg,.jpeg,.png,.pdf">
-            <small class="text-muted">Kosongkan jika tidak ingin mengganti bukti. Maks 2MB (jpg/png/pdf).</small>
+            <small class="text-muted">Kosongkan jika tidak ingin mengganti. Maks 2MB (jpg/png/pdf).</small>
+          </div>
+
+          <div class="form-group">
+            <label>Bukti Pelunasan</label>
+            <?php if (!empty($payment['proof_pelunasan'])): ?>
+              <p class="mb-1">
+                <small>File saat ini:
+                  <a href="../uploads/proofs/<?= htmlspecialchars($payment['proof_pelunasan']) ?>" target="_blank">
+                    <?= htmlspecialchars($payment['proof_pelunasan']) ?>
+                  </a>
+                </small>
+              </p>
+            <?php endif; ?>
+            <input type="file" name="proof_pelunasan" class="form-control-file" accept=".jpg,.jpeg,.png,.pdf">
+            <small class="text-muted">Kosongkan jika tidak ingin mengganti. Maks 2MB (jpg/png/pdf).</small>
           </div>
 
           <div class="form-group">
