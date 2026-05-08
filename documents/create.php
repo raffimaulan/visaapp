@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../helper/auth.php';
 require_once __DIR__ . '/../helper/connection.php';
+require_once __DIR__ . '/../helper/csrf.php';
 require_once __DIR__ . '/../layout/_top.php';
 
 $applications = mysqli_query($connection,
@@ -32,6 +33,7 @@ $selected_id = isset($_GET['application_id']) ? (int)$_GET['application_id'] : 0
         <?php endif; ?>
 
         <form method="POST" action="store.php" enctype="multipart/form-data">
+          <?= csrf_field() ?>
 
           <div class="form-group">
             <label>Pengajuan Visa</label>

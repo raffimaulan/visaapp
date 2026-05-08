@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../helper/auth.php';
 require_once __DIR__ . '/../helper/connection.php';
+require_once __DIR__ . '/../helper/csrf.php';
 require_once __DIR__ . '/../models/Payment.php';
 require_once __DIR__ . '/../layout/_top.php';
 
@@ -48,6 +49,7 @@ $applications = mysqli_query($connection,
         <?php endif; ?>
 
         <form method="POST" action="update.php" enctype="multipart/form-data">
+          <?= csrf_field() ?>
           <input type="hidden" name="id" value="<?= $payment['id'] ?>">
           <input type="hidden" name="existing_proof" value="<?= htmlspecialchars($payment['proof'] ?? '') ?>">
           <input type="hidden" name="existing_proof_pelunasan" value="<?= htmlspecialchars($payment['proof_pelunasan'] ?? '') ?>">
@@ -82,18 +84,21 @@ $applications = mysqli_query($connection,
           <div class="form-row">
             <div class="form-group col-md-4">
               <label>Total Biaya (Rp)</label>
-              <input type="number" name="amount_total" class="form-control"
-                     value="<?= $payment['amount_total'] ?>" min="0" step="any" required>
+              <input type="number" name="amount_total" id="eTotal" class="form-control"
+                     value="<?= (int)$payment['amount_total'] ?>" min="0" step="1" required>
+              <small class="text-muted rp-hint" id="hintTotal"></small>
             </div>
             <div class="form-group col-md-4">
               <label>DP / Uang Muka (Rp)</label>
-              <input type="number" name="dp_amount" class="form-control"
-                     value="<?= $payment['dp_amount'] ?>" min="0" step="any">
+              <input type="number" name="dp_amount" id="eDp" class="form-control"
+                     value="<?= (int)$payment['dp_amount'] ?>" min="0" step="1">
+              <small class="text-muted rp-hint" id="hintDp"></small>
             </div>
             <div class="form-group col-md-4">
               <label>Jumlah Dibayar (Rp)</label>
-              <input type="number" name="amount_paid" class="form-control"
-                     value="<?= $payment['amount_paid'] ?>" min="0" step="any">
+              <input type="number" name="amount_paid" id="ePaid" class="form-control"
+                     value="<?= (int)$payment['amount_paid'] ?>" min="0" step="1">
+              <small class="text-muted rp-hint" id="hintPaid"></small>
             </div>
           </div>
 
@@ -160,29 +165,4 @@ $applications = mysqli_query($connection,
 </section>
 
 <?php require_once __DIR__ . '/../layout/_bottom.php'; ?>
-<script>
-(function() {
-  var fTotal  = document.querySelector('[name="amount_total"]');
-  var fPaid   = document.querySelector('[name="amount_paid"]');
-  var fStatus = document.getElementById('fStatusEdit');
-  var preview = document.getElementById('statusPreviewEdit');
-
-  function updateStatus() {
-    var total = parseFloat(fTotal.value) || 0;
-    var paid  = parseFloat(fPaid.value)  || 0;
-    var status, label, cls;
-    if (total > 0 && paid >= total) {
-      status = 'paid'; label = 'Lunas'; cls = 'badge-success';
-    } else if (paid > 0) {
-      status = 'partial'; label = 'Baru DP'; cls = 'badge-warning';
-    } else {
-      status = 'unpaid'; label = 'Belum Bayar'; cls = 'badge-danger';
-    }
-    fStatus.value = status;
-    preview.innerHTML = '<span class="badge ' + cls + '" style="font-size:0.9rem;padding:6px 12px;">' + label + '</span>';
-  }
-
-  if (fTotal) fTotal.addEventListener('input', updateStatus);
-  if (fPaid)  fPaid.addEventListener('input',  updateStatus);
-})();
-</script>
+<script src="../assets/js/payment.js"></script>

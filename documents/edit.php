@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../helper/auth.php';
 require_once __DIR__ . '/../helper/connection.php';
+require_once __DIR__ . '/../helper/csrf.php';
 require_once __DIR__ . '/../models/Document.php';
 require_once __DIR__ . '/../layout/_top.php';
 
@@ -59,6 +60,7 @@ $application = mysqli_fetch_assoc(mysqli_query($connection,
         </div>
 
         <form method="POST" action="update.php" enctype="multipart/form-data">
+          <?= csrf_field() ?>
           <input type="hidden" name="id" value="<?= $doc['id'] ?>">
 
           <div class="form-group">

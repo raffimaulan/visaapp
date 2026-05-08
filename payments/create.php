@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../helper/auth.php';
 require_once __DIR__ . '/../helper/connection.php';
+require_once __DIR__ . '/../helper/csrf.php';
 require_once __DIR__ . '/../layout/_top.php';
 
 // Ambil semua pengajuan yang BELUM LUNAS:
@@ -42,6 +43,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <?php endif; ?>
 
         <form method="POST" action="store.php" enctype="multipart/form-data">
+          <?= csrf_field() ?>
 
           <!-- PILIH PENGAJUAN -->
           <div class="form-group">
@@ -104,17 +106,20 @@ while ($row = mysqli_fetch_assoc($result)) {
             <div class="form-group col-md-4">
               <label>Total Biaya (Rp)</label>
               <input type="number" name="amount_total" id="fTotal"
-                     class="form-control" placeholder="0" min="0" step="any" required>
+                     class="form-control" placeholder="0" min="0" step="1" required>
+              <small class="text-muted rp-hint" id="hintTotal"></small>
             </div>
             <div class="form-group col-md-4">
               <label>DP / Uang Muka (Rp)</label>
               <input type="number" name="dp_amount" id="fDp"
-                     class="form-control" placeholder="0" min="0" step="any" value="0">
+                     class="form-control" placeholder="0" min="0" step="1" value="0">
+              <small class="text-muted rp-hint" id="hintDp"></small>
             </div>
             <div class="form-group col-md-4">
               <label>Jumlah Dibayar (Rp)</label>
               <input type="number" name="amount_paid" id="fPaid"
-                     class="form-control" placeholder="0" min="0" step="any" value="0">
+                     class="form-control" placeholder="0" min="0" step="1" value="0">
+              <small class="text-muted rp-hint" id="hintPaid"></small>
             </div>
           </div>
 

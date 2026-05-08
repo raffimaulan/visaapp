@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../helper/auth.php';
 require_once __DIR__ . '/../helper/connection.php';
+require_once __DIR__ . '/../helper/csrf.php';
 require_once __DIR__ . '/../models/Payment.php';
 require_once __DIR__ . '/../layout/_top.php';
 
@@ -80,6 +81,7 @@ function payTypeLabel($type) {
         </div>
 
         <form id="formBulkDelete" action="delete_bulk.php" method="POST" style="display:none">
+          <?= csrf_field() ?>
           <div id="bulkInputs"></div>
         </form>
 
@@ -211,10 +213,7 @@ function payTypeLabel($type) {
                         </a>
                       <?php endif; ?>
                       <div class="divider"></div>
-                      <a href="delete.php?id=<?= $row['id'] ?>" class="text-danger"
-                         onclick="return confirm('Yakin hapus data pembayaran ini?')">
-                        <i class="fas fa-trash"></i> Hapus
-                      </a>
+                      <form method="POST" action="delete.php" style="display:inline" onsubmit="return confirm('Yakin hapus data pembayaran ini?')"><?= csrf_field() ?><input type="hidden" name="id" value="<?= $row['id'] ?>"><button type="submit" class="btn-link text-danger" style="background:none;border:none;padding:0;cursor:pointer"><i class="fas fa-trash"></i> Hapus</button></form>
                     </div>
                   </div>
                 </td>

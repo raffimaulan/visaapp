@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php
+session_start();
+require_once __DIR__ . '/../helper/csrf.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,6 +48,7 @@
               <?php endif; ?>
 
               <form method="POST" action="proses_login.php" class="needs-validation" novalidate>
+          <?= csrf_field() ?>
 
                 <div class="form-group">
                   <label>Email</label>

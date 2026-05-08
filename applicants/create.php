@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../helper/auth.php';
 require_once __DIR__ . '/../helper/connection.php';
+require_once __DIR__ . '/../helper/csrf.php';
 require_once __DIR__ . '/../layout/_top.php';
 ?>
 
@@ -21,6 +22,7 @@ require_once __DIR__ . '/../layout/_top.php';
         <?php endif; ?>
 
         <form method="POST" action="store.php">
+          <?= csrf_field() ?>
 
           <div class="form-group">
             <label>Nama Lengkap</label>

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../helper/auth.php';
 require_once __DIR__ . '/../helper/connection.php';
+require_once __DIR__ . '/../helper/csrf.php';
 require_once __DIR__ . '/../layout/_top.php';
 
 // Ambil semua applicant untuk dropdown (sertakan passport_number)
@@ -30,6 +31,7 @@ while ($a = mysqli_fetch_assoc($applicants)) {
         <?php endif; ?>
 
         <form method="POST" action="store.php">
+          <?= csrf_field() ?>
 
           <div class="form-group">
             <label>Pemohon</label>

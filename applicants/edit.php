@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../helper/auth.php';
 require_once __DIR__ . '/../helper/connection.php';
+require_once __DIR__ . '/../helper/csrf.php';
 require_once __DIR__ . '/../models/Applicant.php';
 require_once __DIR__ . '/../layout/_top.php';
 
@@ -37,6 +38,7 @@ if (!$applicant) {
         <?php endif; ?>
 
         <form method="POST" action="update.php">
+          <?= csrf_field() ?>
           <input type="hidden" name="id" value="<?= $applicant['id'] ?>">
 
           <div class="form-group">

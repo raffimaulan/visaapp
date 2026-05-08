@@ -1,33 +1,42 @@
 <?php
 require_once __DIR__ . '/../helper/auth.php';
 require_once __DIR__ . '/../helper/connection.php';
+require_once __DIR__ . '/../helper/csrf.php';
 require_once __DIR__ . '/../models/Payment.php';
 
-$id = (int) ($_GET['id'] ?? 0);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: index.php');
+    exit;
+}
+
+csrf_verify();
+
+$id = (int)($_POST['id'] ?? 0);
 
 if (!$id) {
-    header("Location: index.php");
+    header('Location: index.php');
     exit;
 }
 
 $paymentModel = new Payment($connection);
 
-// Ambil data dulu untuk hapus file bukti jika ada
 $payment = $paymentModel->getById($id);
-if ($payment && !empty($payment['proof'])) {
-    $filePath = __DIR__ . '/../uploads/proofs/' . $payment['proof'];
-    if (file_exists($filePath)) {
-        unlink($filePath);
+if ($payment) {
+    foreach (['proof', 'proof_pelunasan'] as $col) {
+        if (!empty($payment[$col])) {
+            $filePath = __DIR__ . '/../uploads/proofs/' . basename($payment[$col]);
+            if (file_exists($filePath)) unlink($filePath);
+        }
     }
 }
 
 $result = $paymentModel->delete($id);
 
 if ($result) {
-    $_SESSION['success'] = "Data pembayaran berhasil dihapus.";
+    $_SESSION['success'] = 'Data pembayaran berhasil dihapus.';
 } else {
-    $_SESSION['error'] = "Gagal menghapus data pembayaran.";
+    $_SESSION['error'] = 'Gagal menghapus data pembayaran.';
 }
 
-header("Location: index.php");
+header('Location: index.php');
 exit;

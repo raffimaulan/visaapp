@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . '/../helper/auth.php';
 require_once __DIR__ . '/../helper/connection.php';
+require_once __DIR__ . '/../helper/csrf.php';
+
+csrf_verify();
 
 $ids = $_POST['ids'] ?? [];
 $ids = array_filter(array_map('intval', (array)$ids));

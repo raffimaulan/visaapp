@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../helper/auth.php';
 require_once __DIR__ . '/../helper/connection.php';
+require_once __DIR__ . '/../helper/csrf.php';
 require_once __DIR__ . '/../models/Document.php';
 require_once __DIR__ . '/../models/Application.php';
 require_once __DIR__ . '/../layout/_top.php';
@@ -144,6 +145,7 @@ function docStatus($fileCount) {
         </div>
 
         <form id="formBulkDelete" action="delete_bulk.php" method="POST" style="display:none">
+          <?= csrf_field() ?>
           <div id="bulkInputs"></div>
         </form>
 
@@ -251,10 +253,7 @@ function docStatus($fileCount) {
                       <?php endforeach; ?>
                       <div class="divider"></div>
                       <?php foreach ($group['files'] as $idx => $f): ?>
-                        <a href="delete.php?id=<?= $f['id'] ?>" class="text-danger"
-                           onclick="return confirm('Yakin hapus File <?= $idx + 1 ?>?')">
-                          <i class="fas fa-trash"></i> Hapus File <?= $idx + 1 ?>
-                        </a>
+                        <form method="POST" action="delete.php" style="display:inline" onsubmit="return confirm('Yakin hapus File <?= $idx + 1 ?>?')"><?= csrf_field() ?><input type="hidden" name="id" value="<?= $f['id'] ?>"><button type="submit" class="btn-link text-danger" style="background:none;border:none;padding:0;cursor:pointer"><i class="fas fa-trash"></i> Hapus File <?= $idx + 1 ?></button></form>
                       <?php endforeach; ?>
                     </div>
                   </div>

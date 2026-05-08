@@ -1,54 +1,71 @@
 /* ================================================================
-   Payments Create — Auto-fill, info box, & auto-status logic
+   Payments — Format hint Rupiah + auto-fill + status logic
    ================================================================ */
 (function () {
-  var sel           = document.getElementById('applicationSelect');
-  var infoBox       = document.getElementById('infoBox');
-  var infoStatus    = document.getElementById('infoStatus');
-  var infoTotal     = document.getElementById('infoTotal');
-  var infoPaid      = document.getElementById('infoPaid');
-  var infoSisa      = document.getElementById('infoSisa');
-  var pidInput      = document.getElementById('paymentId');
-  var fTotal        = document.getElementById('fTotal');
-  var fDp           = document.getElementById('fDp');
-  var fPaid         = document.getElementById('fPaid');
+
+  /* ---- Helper: angka → "Rp 1.500.000" ---- */
+  function toRp(val) {
+    var n = parseInt(val) || 0;
+    if (!n) return '';
+    return 'Rp\u00a0' + n.toLocaleString('id-ID');
+  }
+
+  /* ---- Pasang hint Rupiah di bawah input number ---- */
+  function attachHint(inputEl, hintEl) {
+    if (!inputEl || !hintEl) return;
+    function refresh() {
+      hintEl.textContent = toRp(inputEl.value);
+    }
+    inputEl.addEventListener('input', refresh);
+    refresh(); // tampilkan nilai awal
+  }
+
+  /* ---- CREATE PAGE ---- */
+  var fTotal = document.getElementById('fTotal');
+  var fDp    = document.getElementById('fDp');
+  var fPaid  = document.getElementById('fPaid');
+
+  attachHint(fTotal, document.getElementById('hintTotal'));
+  attachHint(fDp,    document.getElementById('hintDp'));
+  attachHint(fPaid,  document.getElementById('hintPaid'));
+
+  /* ---- EDIT PAGE ---- */
+  attachHint(document.getElementById('eTotal'), document.getElementById('hintTotal'));
+  attachHint(document.getElementById('eDp'),    document.getElementById('hintDp'));
+  attachHint(document.getElementById('ePaid'),  document.getElementById('hintPaid'));
+
+  /* ---- Status badge (create) ---- */
   var fStatus       = document.getElementById('fStatus');
   var statusPreview = document.getElementById('statusPreview');
-
-  // Simpan total dari data existing agar bisa dipakai di updateStatusPreview
-  var existingTotal = 0;
   var existingPaid  = 0;
 
-  function formatRp(num) {
-    return 'Rp ' + parseInt(num).toLocaleString('id-ID');
-  }
-
-  // Auto-update status badge berdasarkan nominal
   function updateStatusPreview() {
     if (!statusPreview || !fStatus) return;
-    var total    = parseFloat(fTotal ? fTotal.value : 0) || 0;
-    var newPaid  = parseFloat(fPaid  ? fPaid.value  : 0) || 0;
-    // Total yang sudah dibayar = existing + input baru
+    var total     = parseInt(fTotal ? fTotal.value : 0) || 0;
+    var newPaid   = parseInt(fPaid  ? fPaid.value  : 0) || 0;
     var totalPaid = existingPaid + newPaid;
 
-    var status, label, badgeClass;
+    var status, label, cls;
     if (total > 0 && totalPaid >= total) {
-      status = 'paid';    label = 'Lunas';       badgeClass = 'badge-success';
+      status = 'paid';    label = 'Lunas';       cls = 'badge-success';
     } else if (totalPaid > 0) {
-      status = 'partial'; label = 'Baru DP';     badgeClass = 'badge-warning';
+      status = 'partial'; label = 'Baru DP';     cls = 'badge-warning';
     } else {
-      status = 'unpaid';  label = 'Belum Bayar'; badgeClass = 'badge-danger';
+      status = 'unpaid';  label = 'Belum Bayar'; cls = 'badge-danger';
     }
-
     fStatus.value = status;
-    statusPreview.innerHTML = '<span class="badge ' + badgeClass + '" style="font-size:0.9rem;padding:6px 12px;">' + label + '</span>';
+    statusPreview.innerHTML =
+      '<span class="badge ' + cls + '" style="font-size:0.9rem;padding:6px 12px;">' + label + '</span>';
   }
 
-  // Pasang listener ke input nominal
   if (fTotal) fTotal.addEventListener('input', updateStatusPreview);
   if (fPaid)  fPaid.addEventListener('input',  updateStatusPreview);
 
-  // Listener dropdown pengajuan
+  /* ---- Dropdown pengajuan (create) ---- */
+  var sel      = document.getElementById('applicationSelect');
+  var infoBox  = document.getElementById('infoBox');
+  var pidInput = document.getElementById('paymentId');
+
   if (sel) {
     sel.addEventListener('change', function () {
       var opt     = sel.options[sel.selectedIndex];
@@ -59,40 +76,64 @@
       var dp      = parseFloat(opt.getAttribute('data-dp')   || '0');
 
       if (pid > 0) {
-        // MODE UPDATE: pengajuan sudah punya payment (unpaid/partial)
         pidInput.value = pid;
-        existingTotal  = total;
         existingPaid   = paid;
 
-        // Tampilkan info box ringkasan pembayaran sebelumnya
         var label = pstatus === 'partial' ? 'Baru DP' : 'Belum Bayar';
-        infoStatus.textContent = label;
-        infoTotal.textContent  = formatRp(total);
-        infoPaid.textContent   = formatRp(paid);
-        infoSisa.textContent   = formatRp(total - paid);
-        infoBox.style.display  = 'block';
+        document.getElementById('infoStatus').textContent = label;
+        document.getElementById('infoTotal').textContent  = 'Rp\u00a0' + total.toLocaleString('id-ID');
+        document.getElementById('infoPaid').textContent   = 'Rp\u00a0' + paid.toLocaleString('id-ID');
+        document.getElementById('infoSisa').textContent   = 'Rp\u00a0' + (total - paid).toLocaleString('id-ID');
+        infoBox.style.display = 'block';
 
-        // Auto-fill: Total Biaya otomatis terisi, DP terisi, Jumlah Dibayar dikosongkan
         fTotal.value = total;
         fDp.value    = dp;
-        fPaid.value  = 0;  // kosongkan — user isi nominal pembayaran baru
+        fPaid.value  = '';
 
-        // Fokus ke field Jumlah Dibayar supaya user langsung bisa input
-        if (fPaid) fPaid.focus();
+        // Update hint setelah isi nilai
+        document.getElementById('hintTotal').textContent = toRp(total);
+        document.getElementById('hintDp').textContent    = toRp(dp);
+        document.getElementById('hintPaid').textContent  = '';
 
+        fPaid.focus();
       } else {
-        // MODE INSERT: pengajuan belum punya payment sama sekali
         pidInput.value = '0';
-        existingTotal  = 0;
         existingPaid   = 0;
         infoBox.style.display = 'none';
-        fTotal.value  = '';
-        fDp.value     = '0';
-        fPaid.value   = '0';
+        fTotal.value = ''; fDp.value = '0'; fPaid.value = '0';
+        document.getElementById('hintTotal').textContent = '';
+        document.getElementById('hintDp').textContent    = toRp(0);
+        document.getElementById('hintPaid').textContent  = toRp(0);
       }
-
-      // Update status preview
       updateStatusPreview();
     });
   }
+
+  /* ---- Status badge (edit) ---- */
+  var eTotal   = document.getElementById('eTotal');
+  var ePaid    = document.getElementById('ePaid');
+  var fStatusE = document.getElementById('fStatusEdit');
+  var previewE = document.getElementById('statusPreviewEdit');
+
+  function updateStatusEdit() {
+    if (!previewE || !fStatusE) return;
+    var total = parseInt(eTotal ? eTotal.value : 0) || 0;
+    var paid  = parseInt(ePaid  ? ePaid.value  : 0) || 0;
+    var status, label, cls;
+    if (total > 0 && paid >= total) {
+      status = 'paid'; label = 'Lunas'; cls = 'badge-success';
+    } else if (paid > 0) {
+      status = 'partial'; label = 'Baru DP'; cls = 'badge-warning';
+    } else {
+      status = 'unpaid'; label = 'Belum Bayar'; cls = 'badge-danger';
+    }
+    fStatusE.value = status;
+    previewE.innerHTML =
+      '<span class="badge ' + cls + '" style="font-size:0.9rem;padding:6px 12px;">' + label + '</span>';
+  }
+
+  if (eTotal) eTotal.addEventListener('input', updateStatusEdit);
+  if (ePaid)  ePaid.addEventListener('input',  updateStatusEdit);
+  updateStatusEdit();
+
 })();

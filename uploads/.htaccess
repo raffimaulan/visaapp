@@ -1,0 +1,4 @@
+# Blokir semua akses langsung ke folder ini.
+# File hanya boleh diakses melalui serve_file.php yang sudah
+# memvalidasi login dan MIME type.
+Deny from all

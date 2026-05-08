@@ -37,7 +37,6 @@
         </a>
         <ul class="dropdown-menu">
           <li><a class="nav-link" href="../applicants/index.php">Semua Pemohon</a></li>
-          <li><a class="nav-link" href="../applicants/create.php">Tambah Pemohon</a></li>
         </ul>
       </li>
 
@@ -47,7 +46,6 @@
         </a>
         <ul class="dropdown-menu">
           <li><a class="nav-link" href="../payments/index.php">Semua Pembayaran</a></li>
-          <li><a class="nav-link" href="../payments/create.php">Tambah Pembayaran</a></li>
         </ul>
       </li>
 
@@ -57,7 +55,6 @@
         </a>
         <ul class="dropdown-menu">
           <li><a class="nav-link" href="../documents/index.php">Semua Dokumen</a></li>
-          <li><a class="nav-link" href="../documents/create.php">Upload Dokumen</a></li>
         </ul>
       </li>
 

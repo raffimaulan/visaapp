@@ -1,0 +1,11 @@
+# Kredensial — JANGAN pernah commit file ini
+.env
+
+# File upload user
+uploads/documents/*
+uploads/proofs/*
+
+# Kecuali .htaccess di dalam uploads
+!uploads/.htaccess
+!uploads/documents/.gitkeep
+!uploads/proofs/.gitkeep
